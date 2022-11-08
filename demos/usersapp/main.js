@@ -34,18 +34,36 @@ function logDataInBody(data) {
 //   .then(logResponse)
 //   .then(logDataInBody);
 
-fetch("https://jsonplaceholder.typicode.com/users/5")
-  .then((response) => {
-    let dataWrappedInPromise = response.json();
-    console.log(dataWrappedInPromise);
-    return dataWrappedInPromise;
-  })
-  .then((person) => {
-    // document.getElementById("personDiv").innerText = person.name;
-    document.querySelector("#personDiv h3").innerText = person.name;
-    document.querySelector("#personDiv p").innerText = person.phone;
-    console.log(data);
-  });
+const personNumberInput = document.querySelector("#personNumberInput");
+
+function getPerson() {
+  const userId = personNumberInput.value;
+
+  document.querySelector("#personDiv h3").innerText = "Loading...";
+  document.querySelector("#personDiv p").innerText = " ";
+
+  fetch("https://jsonplaceholder.typicode.com/users/" + userId)
+    .then((response) => {
+      let dataWrappedInPromise = response.json();
+      console.log(dataWrappedInPromise);
+      return dataWrappedInPromise;
+    })
+    .then((person) => {
+      if (person) {
+        document.querySelector("#personDiv h3").innerText = person.name;
+        document.querySelector("#personDiv p").innerText = person.phone;
+      }
+
+      console.log(person);
+    });
+}
+
+window.onload = () => {
+  getPerson();
+  const getPersonButton = document.getElementById("getPersonButton");
+  getPersonButton.onclick = getPerson;
+  personNumberInput.onchange = getPerson;
+};
 
 //DEBUG EXAMPLE
 // fetch("https://jsonplaceholder.typicode.com/users/5")
