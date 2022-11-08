@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <select name="usersDropDownList" id="usersDropDownList">
+        <option value="">Select</option>
+    </select>
+    <script>
+
+        function fetchUsers() {
+            return fetch("https://jsonplaceholder.typicode.com/users").then(response => response.json());
+        }
+
+        function fillUsersDropDownList(users) {
+            const usersDropDownList = document.getElementById("usersDropDownList");
+            for (const user of users) {
+
+                const option = document.createElement("option");
+                option.value = user.id;
+                option.innerText = user.name;
+
+                //OR
+                // const option = new Option(user.name, user.id);
+
+                usersDropDownList.appendChild(option);
+            }
+        }
+
+        function loadUsersDropDownList() {
+            fetchUsers().then(fillUsersDropDownList);
+        }
+
+        window.onload = function () {
+            loadUsersDropDownList();
+        }
+
+
+        // function parseJSONToArrayOfObjects(response) {
+        //     return response.json();
+        // }
+
+        // function logUsers(users) {
+        //     console.log(users);
+        // }
+
+        // function fetchUsers() {
+        //     let promise = fetch("https://jsonplaceholder.typicode.com/users");
+        //     let promiseThatReturnsArrayOfObjects = promise.then(parseJSONToArrayOfObjects);
+        //     promiseThatReturnsArrayOfObjects.then(logUsers);
+
+        // }
+
+
+
+    </script>
+</body>
+
+</html>
