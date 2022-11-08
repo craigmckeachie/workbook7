@@ -14,9 +14,7 @@
     </select>
     <script>
 
-        function fetchUsers() {
-            return fetch("https://jsonplaceholder.typicode.com/users").then(response => response.json());
-        }
+
 
         function fillUsersDropDownList(users) {
             const usersDropDownList = document.getElementById("usersDropDownList");
@@ -31,6 +29,10 @@
 
                 usersDropDownList.appendChild(option);
             }
+        }
+
+        function fetchUsers() {
+            return fetch("https://jsonplaceholder.typicode.com/users").then(response => response.json());
         }
 
         function loadUsersDropDownList() {
