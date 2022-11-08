@@ -14,8 +14,6 @@
     </select>
     <script>
 
-
-
         function fillUsersDropDownList(users) {
             const usersDropDownList = document.getElementById("usersDropDownList");
             for (const user of users) {
@@ -36,7 +34,17 @@
         }
 
         function loadUsersDropDownList() {
-            fetchUsers().then(fillUsersDropDownList);
+            // fetchUsers().then(fillUsersDropDownList);
+            //OR
+            fetch("https://jsonplaceholder.typicode.com/users").then(response => response.json())
+                .then((users) => {
+                    const usersDropDownList = document.getElementById("usersDropDownList");
+                    for (const user of users) {
+                        const option = new Option(user.name, user.id);
+                        usersDropDownList.appendChild(option);
+                    }
+                });
+
         }
 
         window.onload = function () {
