@@ -20,15 +20,14 @@
 //     console.log(data);
 //   });
 
-function logResponse(response) {
-  console.log(response); //log response
-  return response.json(); //parse the body into js object
-  //   return JSON.parse(response.body);
-}
+// function logResponse(response) {
+//   console.log(response); //log response
+//   return response.json(); //parse the body into js object
+// }
 
-function logDataInBody(data) {
-  console.log(data);
-}
+// function logDataInBody(data) {
+//   console.log(data);
+// }
 
 // fetch("https://jsonplaceholder.typicode.com/users/5")
 //   .then(logResponse)
