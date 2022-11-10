@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Details</title>
+</head>
+
+<body>
+    <input id="userNumberInput" type="number" min="1" max="10" value="1">
+    <button id="getUserButton">Get User</button>
+    <div id="userDiv">
+        <h3></h3>
+        <p></p>
+    </div>
+    <script>
+        const userNumberInput = document.querySelector("#userNumberInput");
+
+        function getUser() {
+            const userId = userNumberInput.value;
+
+            document.querySelector("#userDiv h3").innerText = "Loading...";
+            document.querySelector("#userDiv p").innerText = " ";
+
+            fetch("https://jsonplaceholder.typicode.com/users/" + userId)
+                .then((response) => response.json())
+                .then((user) => {
+                    if (user) {
+                        document.querySelector("#userDiv h3").innerText = user.name;
+                        document.querySelector("#userDiv p").innerText = user.phone;
+                    }
+                });
+        }
+
+        window.onload = () => {
+            getUser();
+            const getUserButton = document.getElementById("getUserButton");
+            getUserButton.onclick = getUser;
+            userNumberInput.onchange = getUser;
+        };
+    </script>
+</body>
+
+</html>
