@@ -21,14 +21,6 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td></td>
-                <td>
-                    <a href="./details.html">
-                        <TextNode>Course Name</TextNode>
-                    </a>
-                </td>
-            </tr>
         </tbody>
     </table>
 
@@ -37,14 +29,9 @@
         function fillUsersDropDownList(users) {
             const usersDropDownList = document.getElementById("usersDropDownList");
             for (const user of users) {
-
-                const option = document.createElement("option");
+                const option = document.createElement("option"); //OR const option = new Option(user.name, user.id);
                 option.value = user.id;
                 option.innerText = user.name;
-
-                //OR
-                // const option = new Option(user.name, user.id);
-
                 usersDropDownList.appendChild(option);
             }
         }
@@ -58,49 +45,18 @@
                 cell1.innerText = user.name;
                 cell2.innerText = user.email;
             }
-
         }
 
         function fetchUsers() {
             return fetch("https://jsonplaceholder.typicode.com/users").then(response => response.json());
         }
 
-        function loadUsersDropDownList() {
-            fetchUsers().then(fillUsersDropDownList);
-            fetchUsers().then(fillUsersTable);
-            //OR
-
-            // fetch("https://jsonplaceholder.typicode.com/users").then(response => response.json())
-            //     .then((users) => {
-            //         const usersDropDownList = document.getElementById("usersDropDownList");
-            //         for (const user of users) {
-            //             const option = new Option(user.name, user.id);
-            //             usersDropDownList.appendChild(option);
-            //         }
-            //     });
-
-        }
-
         window.onload = function () {
-            loadUsersDropDownList();
+            fetchUsers().then((data) => {
+                fillUsersDropDownList(data);
+                fillUsersTable(data);
+            });
         }
-
-
-        // function parseJSONToArrayOfObjects(response) {
-        //     return response.json();
-        // }
-
-        // function logUsers(users) {
-        //     console.log(users);
-        // }
-
-        // function fetchUsers() {
-        //     let promise = fetch("https://jsonplaceholder.typicode.com/users");
-        //     let promiseThatReturnsArrayOfObjects = promise.then(parseJSONToArrayOfObjects);
-        //     promiseThatReturnsArrayOfObjects.then(logUsers);
-
-        // }
-
 
 
     </script>
