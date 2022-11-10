@@ -10,7 +10,7 @@
 
 <body>
 
-    <div>
+    <div id="product-details">
         <h2>productName</h2>
         <div>Price: unitPrice</div>
         <div>How Many Left? unitsInStock</div>
@@ -22,6 +22,26 @@
 
 </body>
 <script>
+    function getProductId() {
+        let parameters = new URLSearchParams(location.search);
+        return parameters.get("id");
+    }
+
+    function loadProduct(productId) {
+        return fetch(`http://localhost:8081/api/products/${productId}`)
+            .then((response) => response.json())
+    }
+
+    function fillProductDetails(product) {
+        const productDiv = document.querySelector("#product-details");
+        productDiv.querySelector("h2").innerText = product.productName;
+        productDiv.querySelector("div").innerText = product.unitPrice;
+
+    }
+
+    window.onload = () => {
+        loadProduct(getProductId()).then(product => fillProductDetails(product))
+    }
 
 </script>
 
