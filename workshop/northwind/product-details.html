@@ -35,7 +35,13 @@
     function fillProductDetails(product) {
         const productDiv = document.querySelector("#product-details");
         productDiv.querySelector("h2").innerText = product.productName;
-        productDiv.querySelector("div").innerText = product.unitPrice;
+        const detailDivs = productDiv.querySelectorAll("div");
+        detailDivs[0].innerText = product.unitPrice;
+        detailDivs[1].innerText = product.unitsInStock;
+        detailDivs[2].innerText = product.categoryId;
+        detailDivs[3].innerText = product.supplier;
+        detailDivs[4].innerText = product.discontinued;
+        detailDivs[5].innerText = product.productId;
 
     }
 
