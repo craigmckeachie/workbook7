@@ -10,6 +10,10 @@
 </head>
 
 <body>
+    <select name="category-dropdown-list" id="category-dropdown-list">
+        <option value="">Select</option>
+    </select>
+    
     <table id="products-table">
         <thead>
             <tr>
@@ -22,6 +26,21 @@
     </table>
 </body>
 <script>
+
+    function loadCategories() {
+        return fetch("http://localhost:8081/api/categories").then((response) => response.json())
+    }
+
+    function fillCategoriesDropdownList(categories) {
+        const categoryDropdownList = document.querySelector("#category-dropdown-list");
+
+        for (const category of categories) {
+            const option = document.createElement("option");
+            option.value = category.categoryId;
+            option.text = category.name;
+            categoryDropdownList.appendChild(option);
+        }
+    }
 
     function loadProducts() {
         return fetch("http://localhost:8081/api/products").then((response) => response.json())
@@ -49,6 +68,7 @@
     }
 
     window.onload = () => {
+        loadCategories().then((categories) => fillCategoriesDropdownList(categories));
         loadProducts().then((products) => fillProductsTable(products));
     }
 </script>
