@@ -61,7 +61,10 @@
             let cell2 = row.insertCell(1);
             let cell3 = row.insertCell(2);
             cell1.innerText = product.productName;
-            cell2.innerText = product.unitPrice;
+            cell2.innerText = Number(product.unitPrice).toLocaleString('en-US', {
+                style: 'currency',
+                currency: 'USD',
+            });
 
             const viewDetailsLink = createViewDetailsLink(product);
             cell3.appendChild(viewDetailsLink);
