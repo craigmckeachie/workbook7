@@ -8,11 +8,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
     <nav>
-        <a href="./index.html">Home</a> |
+        <a href="./index.html">Home</a>
         <a href="./products.html">Products</a>
     </nav>
     <h1>Products</h1>
@@ -97,7 +98,6 @@
         }
 
         function fillProductsTable(products) {
-            clearTableBody();
             for (const product of products) {
                 let row = productsTbody.insertRow(-1);
                 let cell1 = row.insertCell(0);
@@ -133,10 +133,12 @@
                         loadCategoriesIntoDropdownList();
                     }
                     show(categoryDropdownList);
+                    clearTableBody(productsTbody);
                     break;
                 case "all":
                     categoryDropdownList.value = "";
                     hide(categoryDropdownList);
+                    clearTableBody(productsTbody);
                     loadProductsIntoTable();
                     break;
                 default:
