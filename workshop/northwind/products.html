@@ -12,13 +12,20 @@
 
 <body>
     <nav>
-        <a href="./index.html">Home</a> | 
+        <a href="./index.html">Home</a> |
         <a href="./products.html">Products</a>
     </nav>
     <h1>Products</h1>
     <form action="">
         <fieldset>
-            <legend>Filters</legend>
+            <legend>Search</legend>
+            <label for="search-type-dropdown-list">By</label>
+            <select name="search-type-dropdown-list" id="search-type-dropdown-list">
+                <option value="">Select One...</option>
+                <option value="category">Search by Category</option>
+                <option value="all">View All</option>
+            </select>
+
             <label for="category-dropdown-list">Categories</label>
             <select name="category-dropdown-list" id="category-dropdown-list">
                 <option value="">Select</option>
@@ -39,7 +46,21 @@
 </body>
 <script>
     window.onload = () => {
+        const searchTypeDropdownList = document.querySelector("#search-type-dropdown-list");
         const categoryDropdownList = document.querySelector("#category-dropdown-list");
+        const productsTbody = document.querySelector("#products-table tbody");
+
+        function hide(element) {
+            element.style.display = "none";
+            const labelForElement = document.querySelector(`label[for=${element.id}]`);
+            if (labelForElement) { labelForElement.style.display = "none"; }
+        }
+
+        function show(element) {
+            element.style.display = "block";
+            const labelForElement = document.querySelector(`label[for=${element.id}]`);
+            if (labelForElement) { labelForElement.style.display = "block"; }
+        }
 
         function loadCategories() {
             return fetch("http://localhost:8081/api/categories").then((response) => response.json())
@@ -71,11 +92,15 @@
             return viewDetailsLink;
         }
 
+        function clearTableBody() {
+            productsTbody.innerHTML = " ";
+        }
+
+
         function fillProductsTable(products) {
-            const tbody = document.querySelector("#products-table tbody");
-            tbody.innerHTML = " ";
+            clearTableBody();
             for (const product of products) {
-                let row = tbody.insertRow(-1);
+                let row = productsTbody.insertRow(-1);
                 let cell1 = row.insertCell(0);
                 let cell2 = row.insertCell(1);
                 let cell3 = row.insertCell(2);
@@ -102,10 +127,33 @@
             loadProducts().then((products) => filterProductsByCategory(products)).then((products) => fillProductsTable(products));
         }
 
+        function searchTypeDropdownListChanged() {
+            switch (searchTypeDropdownList.value) {
+                case "category":
+                    if (categoryDropdownList.options.length === 1) {
+                        loadCategoriesIntoDropdownList();
+                    }
+                    show(categoryDropdownList);
+                    break;
+                case "all":
+                    categoryDropdownList.value = "";
+                    hide(categoryDropdownList);
+                    loadProductsIntoTable();
+                    break;
+                default:
+                    categoryDropdownList.value = "";
+                    hide(categoryDropdownList);
+                    clearTableBody(productsTbody);
+                    break;
+            }
+        }
 
-        loadCategoriesIntoDropdownList();
-        loadProductsIntoTable();
+
+        // loadCategoriesIntoDropdownList();
+        // loadProductsIntoTable();
+        hide(categoryDropdownList);
         categoryDropdownList.onchange = loadFilteredProductsIntoTable;
+        searchTypeDropdownList.onchange = searchTypeDropdownListChanged;
     }
 </script>
 
