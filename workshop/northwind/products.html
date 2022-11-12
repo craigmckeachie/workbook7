@@ -96,7 +96,6 @@
             productsTbody.innerHTML = " ";
         }
 
-
         function fillProductsTable(products) {
             clearTableBody();
             for (const product of products) {
@@ -148,9 +147,6 @@
             }
         }
 
-
-        // loadCategoriesIntoDropdownList();
-        // loadProductsIntoTable();
         hide(categoryDropdownList);
         categoryDropdownList.onchange = loadFilteredProductsIntoTable;
         searchTypeDropdownList.onchange = searchTypeDropdownListChanged;
