@@ -11,9 +11,16 @@
 </head>
 
 <body>
-    <select name="category-dropdown-list" id="category-dropdown-list">
-        <option value="">Select</option>
-    </select>
+    <h1>Products</h1>
+    <form action="">
+        <fieldset>
+            <legend>Filters</legend>
+            <label for="category-dropdown-list">Categories</label>
+            <select name="category-dropdown-list" id="category-dropdown-list">
+                <option value="">Select</option>
+            </select>
+        </fieldset>
+    </form>
 
     <table id="products-table">
         <thead>
@@ -27,53 +34,74 @@
     </table>
 </body>
 <script>
-
-    function loadCategories() {
-        return fetch("http://localhost:8081/api/categories").then((response) => response.json())
-    }
-
-    function fillCategoriesDropdownList(categories) {
+    window.onload = () => {
         const categoryDropdownList = document.querySelector("#category-dropdown-list");
 
-        for (const category of categories) {
-            const option = document.createElement("option");
-            option.value = category.categoryId;
-            option.text = category.name;
-            categoryDropdownList.appendChild(option);
+        function loadCategories() {
+            return fetch("http://localhost:8081/api/categories").then((response) => response.json())
         }
-    }
 
-    function loadProducts() {
-        return fetch("http://localhost:8081/api/products").then((response) => response.json())
-    }
-    function createViewDetailsLink(product) {
-        const viewDetailsLink = document.createElement('a');
-        viewDetailsLink.href = `./product-details.html?id=${product.productId}`
-        viewDetailsLink.innerText = "View Details"
-        return viewDetailsLink;
-    }
-
-    function fillProductsTable(products) {
-        const tbody = document.querySelector("#products-table tbody");
-        for (const product of products) {
-            let row = tbody.insertRow(-1);
-            let cell1 = row.insertCell(0);
-            let cell2 = row.insertCell(1);
-            let cell3 = row.insertCell(2);
-            cell1.innerText = product.productName;
-            cell2.innerText = Number(product.unitPrice).toLocaleString('en-US', {
-                style: 'currency',
-                currency: 'USD',
-            });
-
-            const viewDetailsLink = createViewDetailsLink(product);
-            cell3.appendChild(viewDetailsLink);
+        function fillCategoriesDropdownList(categories) {
+            for (const category of categories) {
+                const option = document.createElement("option");
+                option.value = category.categoryId;
+                option.text = category.name;
+                categoryDropdownList.appendChild(option);
+            }
         }
-    }
 
-    window.onload = () => {
-        loadCategories().then((categories) => fillCategoriesDropdownList(categories));
-        loadProducts().then((products) => fillProductsTable(products));
+        function loadProducts() {
+            return fetch("http://localhost:8081/api/products").then((response) => response.json())
+        }
+
+        function filterProductsByCategory(products) {
+            const selectedCategoryId = Number(categoryDropdownList.value)
+            if (!selectedCategoryId) return products;
+            return products.filter(product => product.categoryId === selectedCategoryId)
+        }
+
+        function createViewDetailsLink(product) {
+            const viewDetailsLink = document.createElement('a');
+            viewDetailsLink.href = `./product-details.html?id=${product.productId}`
+            viewDetailsLink.innerText = "View Details"
+            return viewDetailsLink;
+        }
+
+        function fillProductsTable(products) {
+            const tbody = document.querySelector("#products-table tbody");
+            tbody.innerHTML = " ";
+            for (const product of products) {
+                let row = tbody.insertRow(-1);
+                let cell1 = row.insertCell(0);
+                let cell2 = row.insertCell(1);
+                let cell3 = row.insertCell(2);
+                cell1.innerText = product.productName;
+                cell2.innerText = Number(product.unitPrice).toLocaleString('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                });
+
+                const viewDetailsLink = createViewDetailsLink(product);
+                cell3.appendChild(viewDetailsLink);
+            }
+        }
+
+        function loadCategoriesIntoDropdownList(params) {
+            loadCategories().then((categories) => fillCategoriesDropdownList(categories));
+        }
+
+        function loadProductsIntoTable() {
+            loadProducts().then((products) => fillProductsTable(products));
+        }
+
+        function loadFilteredProductsIntoTable() {
+            loadProducts().then((products) => filterProductsByCategory(products)).then((products) => fillProductsTable(products));
+        }
+
+
+        loadCategoriesIntoDropdownList();
+        loadProductsIntoTable();
+        categoryDropdownList.onchange = loadFilteredProductsIntoTable;
     }
 </script>
 
