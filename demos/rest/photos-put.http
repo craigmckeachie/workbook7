@@ -1,0 +1,10 @@
+PUT http://localhost:8888/photos/1
+Content-Type: application/json
+
+{
+  "albumId": 1,
+  "title": "Ari's Best Photo",
+  "url": "https://images.squarespace-cdn.com/content/v1/5a5fdd3b90bcce2f99f8b1a2/1598300049906-LOG2AHO8HTT8V18UDH8N/F31F1DFF-387B-4E55-B767-B44E185BFF2A.JPEG?format=500w",
+  "thumbnailUrl": "https://via.placeholder.com/150/92c952",
+  "id": 1
+}

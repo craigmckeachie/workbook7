@@ -1,0 +1,9 @@
+POST http://localhost:8888/photos/
+Content-Type: application/json
+
+{
+  "albumId": 5,
+  "title": "Fail Frustration",
+  "url": "https://i.ytimg.com/vi/-7FdLM8y5p8/maxresdefault.jpg",
+  "thumbnailUrl": "https://i.ytimg.com/vi/-7FdLM8y5p8/maxresdefault.jpg"
+}
