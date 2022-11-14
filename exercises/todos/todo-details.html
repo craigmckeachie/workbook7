@@ -21,15 +21,18 @@
     </div>
     <script>
         window.onload = () => {
+            const $q = (selector) => document.querySelector(selector)
+
+
             function onButtonClicked() {
-                const id = document.querySelector("#todoId").value;
+                const id = $q("#todoId").value;
                 loadTodo(id);
             }
 
 
             function loadTodo(todoId) {
-                const completedSpan = document.querySelector("#todo-card span");
-                const titleParagraph = document.querySelector("#todo-card p");
+                const completedSpan = $q("#todo-card span");
+                const titleParagraph = $q("#todo-card p");
 
                 fetch(`http://localhost:8888/todos/${todoId}`).then(response => response.json()).then(data => {
                     console.log(data);
@@ -40,7 +43,7 @@
             }
 
 
-            const button = document.querySelector("button");
+            const button = $q("button");
             button.onclick = onButtonClicked;
         }
 
