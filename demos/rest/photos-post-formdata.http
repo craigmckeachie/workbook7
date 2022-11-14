@@ -1,0 +1,4 @@
+POST http://localhost:8888/photos/
+Content-Type: application/x-www-form-urlencoded
+
+title=My Photo&url=https://i.ytimg.com/vi/-7FdLM8y5p8/maxresdefault.jpg
