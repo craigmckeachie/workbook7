@@ -11,20 +11,33 @@
 </head>
 
 <body>
-    <h1>Todo</h1>
-    <label for="todoId">Id</label>
-    <input type="text" id="todoId">
-    <button>Get</button>
-    <div id="todo-card">
-        <span></span>
-        <p></p>
-    </div>
+
+
+
+    <main>
+        <h1>todo</h1>
+        <form>
+            <label for="todoId">ID</label>
+            <input type="text" id="todoId" placeholder="id">
+            <button type="submit">Get</button>
+        </form>
+
+        <div id="todo-card">
+            <span></span>
+            <p></p>
+        </div>
+    </main>
+
+
+
+
     <script>
         window.onload = () => {
             const $q = (selector) => document.querySelector(selector)
 
 
-            function onButtonClicked() {
+            function onFormSubmit(event) {
+                event.preventDefault();
                 const id = $q("#todoId").value;
                 loadTodo(id);
             }
@@ -43,8 +56,8 @@
             }
 
 
-            const button = $q("button");
-            button.onclick = onButtonClicked;
+            const form = $q("form");
+            form.onsubmit = onFormSubmit;
         }
 
 
