@@ -18,6 +18,7 @@
             <label for="titleInput">Task</label>
             <input type="text" name="titleInput" id="titleInput">
             <button>Save</button>
+            <p id="messageParagraph"></p>
         </form>
     </main>
     <script>
@@ -27,21 +28,31 @@
             const completedCheckbox = $q("#completedCheckbox");
             const titleInput = $q("#titleInput");
             const form = $q("form");
+            const messageParagraph = $q("#messageParagraph");
 
             function saveTodo(event) {
                 event.preventDefault();
 
-                let bodyData = {
-
+                const bodyData = {
+                    userId: 1,
+                    title: titleInput.value,
+                    completed: completedCheckbox.checked,
                 }
-                fetch("http://localhost:8888/todos/2", {
-                    method: "POST",
-                    body: JSON.stringify(bodyData),
-                    headers: { "Content-type": "application/json; charset=UTF-8" }
-                }).then(response => response.json()).then(todo => {
 
-                }).catch(err => {
-                });
+                fetch("http://localhost:8888/todos/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(bodyData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        messageParagraph.innerText = "Successfully saved."
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        messageParagraph.innerText = "An unexpected error occured."
+                    });
 
 
             }
