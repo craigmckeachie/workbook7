@@ -1,3 +1,9 @@
 body {
   margin: auto 10rem;
 }
+
+.menu-bar {
+  display: flex;
+  justify-content: flex-end;
+  width: 30rem;
+}
