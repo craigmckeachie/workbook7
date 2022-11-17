@@ -17,7 +17,10 @@
         <h1>Page 2</h1>
     </main>
     <script>
-        console.log(localStorage.message)
+        if (localStorage.message) {
+            console.log(localStorage.message);
+            // console.log(localStorage.getItem("message"));
+        }
     </script>
 </body>
 
